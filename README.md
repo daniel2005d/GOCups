@@ -25,12 +25,16 @@ Herramienta de línea de comandos en Go para la enumeración y auditoría de imp
 
 ---
 
+# Binarios
+
+Descargar los binarios de la carpeta [bin](https://github.com/daniel2005d/GOCups/tree/main/bin)
+
 ## Instalación y compilación
 
 ### Clonar el repositorio
 
 ```bash
-git clone [https://github.com:daniel2005d/GOCups.git](https://github.com:daniel2005d/GOCups.git)
+git clone https://github.com/daniel2005d/GOCups.git
 cd gocups
 ```
 

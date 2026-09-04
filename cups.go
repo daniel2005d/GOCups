@@ -15,6 +15,9 @@ import (
 
 const defaultPort = 631
 
+var y = color.New(color.FgYellow).SprintFunc()
+var g = color.New(color.FgGreen).SprintFunc()
+
 type Client struct {
 	UrlConf     string
 	UrlPrinters string
@@ -53,7 +56,7 @@ func (client *Client) printJobs(printer *PrinterInfo) {
 		logger.Error(err)
 	} else {
 		jobs := client.processJob(body)
-
+		fmt.Printf("%s: %s\n", y("Jobs"), g(len(jobs)))
 		if len(jobs) > 0 {
 			table := tablewriter.NewTable(os.Stdout)
 			table.Header("ID", "Nombre", "Usuario", "Tamaño", "Paginas", "Estado")
@@ -61,13 +64,12 @@ func (client *Client) printJobs(printer *PrinterInfo) {
 			table.Render()
 		}
 
+		logger.Info("======================================================")
+
 	}
 }
 
 func (client *Client) PrintInformation(printers *[]PrinterInfo) {
-	y := color.New(color.FgYellow).SprintFunc()
-	g := color.New(color.FgGreen).SprintFunc()
-	w := color.New(color.FgHiWhite)
 
 	for _, printer := range *printers {
 		fmt.Printf("%s: %s\n", y("Nombre"), g(printer.Name))
@@ -75,10 +77,7 @@ func (client *Client) PrintInformation(printers *[]PrinterInfo) {
 		fmt.Printf("%s: %s\n", y("Ubicación"), g(printer.Location))
 		fmt.Printf("%s: %s\n", y("Modelo/Marca"), g(printer.Model))
 		fmt.Printf("%s: %s\n", y("Estado"), g(printer.Status))
-		w.Println("************* JOBS **********************")
 		client.printJobs(&printer)
-
-		w.Println("****************************************")
 
 	}
 }
@@ -96,7 +95,6 @@ func (client *Client) EnumPrinters(host string, optionalPort ...int) error {
 	client.UrlPrinters = fmt.Sprintf("http://%s:%d%s", host, port, client.UrlPrinters)
 
 	client.Logger.Info("Enumerando impresoras de %s:%d", host, port)
-	logger.Info("=======================================")
 
 	body, err := utils.Get(client.UrlPrinters)
 
@@ -106,7 +104,6 @@ func (client *Client) EnumPrinters(host string, optionalPort ...int) error {
 
 	printers := client.processPrinters(body)
 	client.PrintInformation(&printers)
-	logger.Info("=======================================")
 
 	return nil
 }

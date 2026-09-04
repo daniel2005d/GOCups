@@ -15,12 +15,12 @@ func banner() {
 	cb := color.New(color.FgCyan, color.Bold).SprintFunc()
 	c := color.New(color.FgCyan).SprintFunc()
 
-	version := "2026.1.0"
+	version := "2026.1.1"
 	name := "Enumeración de CUPS"
 	author := "Daniel Vargas"
 
 	fmt.Printf("%s: %s\n", cb(name), c(version))
-	fmt.Printf("%s: %s\n", cb("Autor"), c(author))
+	fmt.Printf("%s: %s\n\n", cb("Autor"), c(author))
 }
 
 func main() {
